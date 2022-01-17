@@ -1,0 +1,37 @@
+service: message-que-api
+plugins:
+  - uuid
+provider:
+  name: aws
+  runtime: nodejs10.x
+  stage: dev
+  region: ap-southeast-2  
+  iamRoleStatements:
+  - Effect: "Allow"
+    Action:
+      -  dynamodb:CreateTable
+      -  dynamodb:PutItem
+      -  dynamodb:logevent
+      -  dynamodb:Scan
+    Resource:
+      Fn::Join:
+      - ""
+      - - "arn:aws:dynamodb:ap-southeast-2:734082937642:table/"
+        - "Ref" : "ServerlessDeploymentBucket"
+        - "/*"
+  include:
+  - utils/**
+
+functions:
+  log_event:
+    handler: handler.log_event
+    events:
+    - http:
+        path: /log_event
+        method: get
+  get_correlationID:
+    handler: handler.get_correlationID
+    events:
+    - http:
+        path: /get_correlationID
+        method: get

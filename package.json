@@ -1,0 +1,13 @@
+{
+    "name": "message_que",
+    "version": "1.0.0",
+    "description": "",
+    "license": "MIT",
+    "scripts": {
+        "start": "serverless deploy"
+    },
+    "dependencies": {
+        "aws-sdk": "^2.504.0",
+        "uuid": "^3.3.2"
+    }
+}
